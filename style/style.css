@@ -41,28 +41,41 @@ header {
 footer {
     bottom: 0;
     padding: 0 18px;
+    height: 80px;
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: stretch;
-
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
 }
 
-footer>button, footer>textarea {
+footer>button, footer>div>textarea {
     border: none;
     background-color: transparent;
-    font-size: 18px;
+    font-size: 16px;
     resize: none;
+    margin-top: 13px;
 }
 
-footer>textarea { width: 100%;}
+footer>div>span {
+    font-size: 14px;
+    font-weight: 300;
+    color: #505050;
+}
 
-footer>textarea::placeholder {
+footer>div>textarea {
+    width: 100%;
+    height: 25px;
+    align-self: flex-end;
+}
+
+footer>div>textarea::placeholder {
     font-style: italic;
-    font-size: 18px;
+    font-size: 16px;
     color: #000;
 }
 
-footer>textarea:focus {
+footer>div>textarea:focus {
     outline: 3px solid transparent;
 }
 
