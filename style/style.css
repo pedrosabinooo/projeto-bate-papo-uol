@@ -98,6 +98,7 @@ footer>textarea:focus {
 
 main {
     margin-top: calc(80px + 22px);
+    width: 100%;
 }
 
 main>div {
