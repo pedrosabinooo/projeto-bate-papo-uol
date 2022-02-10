@@ -19,84 +19,59 @@
     <div id="container">
         <header>
             <img src="media/logo-uol.svg" alt="Logo Bate Papo UOL">
-            <img src="media/people.svg" alt="Participantes">
+            <button onclick="openSidebar()"><img src="media/people.svg" alt="Participantes"></button>
         </header>
         
-        <main>
-            <div class="in-out">
-                <span class="time">(09:21:45)</span>
-                <span class="from-to"><span class="username">João</span></span>
-                <span class="text" data-identifier="message">entra na sala...</span>
-            </div>
-            <div class="message">
-                <span class="time">(09:22:28)</span>
-                <span class="from-to"><span class="username">João</span> para <span class="username">Todos</span>:</span>
-                <span class="text" data-identifier="message">Bom dia</span>
-            </div>
-            <div class="message">
-                <span class="time">(09:22:38)</span>
-                <span class="from-to"><span class="username">Maria</span> para <span class="username">João</span>:</span>
-                <span class="text" data-identifier="message">Oi João :)</span>
-            </div>
-            <div class="private message">
-                <span class="time">(09:22:48)</span>
-                <span class="from-to"><span class="username">João</span> reservadamente para <span class="username">Maria</span>:</span>
-                <span class="text" data-identifier="message">Oi gatinha quer tc?</span>
-            </div>
-            <div class="in-out">
-                <span class="time">(09:22:58)</span>
-                <span class="from-to"><span class="username">Maria</span></span>
-                <span class="text" data-identifier="message">sai na sala...</span>
-            </div>
-        </main>
+        <main></main>
         
-        <aside class="hidden">
-                <section>
-                    <span class="instructions">Escolha um contato<br>para enviar mensagem:</span>
-                    <div class="contacts">
-                        <div class="contact all">
-                            <figure><img src="media/people.svg" alt="Todos"></figure>
-                            <div class="checked-style">
-                                <span>Todos</span>
-                                <img class="hidden" src="media/check.svg" alt="Selected">
-                            </div>
-                        </div>
-                        <div class="contact person">
-                            <figure><img src="media/person.svg" alt="João"></figure>
-                            <div class="checked-style">
-                                <span>João</span>
-                                <img class="hidden" src="media/check.svg" alt="Selected">
-                            </div>
-                        </div>
-                        <div class="contact person">
-                            <figure><img src="media/person.svg" alt="Maria"></figure>
-                            <div class="checked-style">
-                                <span>Maria</span>
-                                <img src="media/check.svg" alt="Selected">
-                            </div>
+        <aside class="">
+            <button onclick="closeSidebar(this)"></button>
+            <section>
+                <span class="instructions">Escolha um contato<br>para enviar mensagem:</span>
+                <div class="contacts">
+                    <div class="contact all">
+                        <figure><img src="media/people.svg" alt="Todos"></figure>
+                        <div class="checked-style">
+                            <span>Todos</span>
+                            <img class="hidden" src="media/check.svg" alt="Selected">
                         </div>
                     </div>
-                    <span class="instructions">Escolha a visibilidade:</span>
-                    <div class="visibility">
-                        <div>
-                            <figure><img src="media/lock-opened.svg" alt="Public"></figure>
-                            <div class="checked-style public">
-                                <span>Público</span>
-                                <img class="hidden" src="media/check.svg" alt="Selected">
-                            </div>
-                        </div>
-                        <div>
-                            <figure><img src="media/lock-locked.svg" alt="Private"></figure>
-                            <div class="checked-style private">
-                                <span>Reservadamente</span>
-                                <img src="media/check.svg" alt="Selected">
-                            </div>
+                    <div class="contact person" data-identifier="participant">
+                        <figure><img src="media/person.svg" alt="João"></figure>
+                        <div class="checked-style">
+                            <span>João</span>
+                            <img class="hidden" src="media/check.svg" alt="Selected">
                         </div>
                     </div>
-                </section>
+                    <div class="contact person" data-identifier="participant">
+                        <figure><img src="media/person.svg" alt="Maria"></figure>
+                        <div class="checked-style">
+                            <span>Maria</span>
+                            <img src="media/check.svg" alt="Selected">
+                        </div>
+                    </div>
+                </div>
+                <span class="instructions">Escolha a visibilidade:</span>
+                <div class="visibility">
+                    <div>
+                        <figure><img src="media/lock-opened.svg" alt="Public"></figure>
+                        <div class="checked-style public" data-identifier="visibility">
+                            <span>Público</span>
+                            <img class="hidden" src="media/check.svg" alt="Selected">
+                        </div>
+                    </div>
+                    <div>
+                        <figure><img src="media/lock-locked.svg" alt="Private"></figure>
+                        <div class="checked-style private" data-identifier="visibility">
+                            <span>Reservadamente</span>
+                            <img src="media/check.svg" alt="Selected">
+                        </div>
+                    </div>
+                </div>
+            </section>
         </aside>
         
-        <div class="login">
+        <div class="login hidden">
             <img src="media/logo-uol.svg" alt="Logo Bate Papo UOL">
             <input type="text" placeholder="Digite seu nome" data-identifier="enter-name">
             <button onclick="login()" data-identifier="start"><p>Entrar</p></button>
