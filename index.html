@@ -56,11 +56,17 @@
                     <div class="contacts">
                         <div class="contact all">
                             <figure><img src="media/people.svg" alt="Todos"></figure>
-                            <div class="checked-style"><span>Todos</span></div>
+                            <div class="checked-style">
+                                <span>Todos</span>
+                                <img class="hidden" src="media/check.svg" alt="Selected">
+                            </div>
                         </div>
                         <div class="contact person">
                             <figure><img src="media/person.svg" alt="João"></figure>
-                            <div class="checked-style"><span>João</span></div>
+                            <div class="checked-style">
+                                <span>João</span>
+                                <img class="hidden" src="media/check.svg" alt="Selected">
+                            </div>
                         </div>
                         <div class="contact person">
                             <figure><img src="media/person.svg" alt="Maria"></figure>
@@ -74,11 +80,14 @@
                     <div class="visibility">
                         <div>
                             <figure><img src="media/lock-opened.svg" alt="Public"></figure>
-                            <div class="checked-style"><span>Público</span></div>
+                            <div class="checked-style public">
+                                <span>Público</span>
+                                <img class="hidden" src="media/check.svg" alt="Selected">
+                            </div>
                         </div>
                         <div>
                             <figure><img src="media/lock-locked.svg" alt="Private"></figure>
-                            <div class="checked-style">
+                            <div class="checked-style private">
                                 <span>Reservadamente</span>
                                 <img src="media/check.svg" alt="Selected">
                             </div>
@@ -87,21 +96,20 @@
                 </section>
         </aside>
         
-        <div class="hidden login">
+        <div class="login">
             <img src="media/logo-uol.svg" alt="Logo Bate Papo UOL">
-            <input type="text" placeholder="Digite seu nome">
-            <button><p>Entrar</p></button>
+            <input type="text" placeholder="Digite seu nome" data-identifier="enter-name">
+            <button onclick="login()" data-identifier="start"><p>Entrar</p></button>
         </div>
         
         <footer>
-            <div>
-                <textarea type="text" placeholder="Escreva aqui..."></textarea>
-                <span class="privado">Enviando para Maria (reservadamente)</span>
-            </div>
+            <textarea type="text" placeholder="Escreva aqui..."></textarea>
+            <span class="private hidden">Enviando para Maria (reservadamente)</span>
             <button data-identifier="send-message"><img src="media/send-button.svg" alt="Send button"></button>
         </footer>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -20,6 +20,8 @@ body {
     background-color: #F3F3F3;
 }
 
+/* ------ HEADER E FOOTER ------ */
+
 header, footer {
     position: absolute;
     left: 0;
@@ -49,7 +51,9 @@ footer {
     font-family: 'Roboto', sans-serif;
 }
 
-footer>button, footer>div>textarea {
+footer>button {
+    position: absolute;
+    right: 18px;
     border: none;
     background-color: transparent;
     font-size: 16px;
@@ -57,27 +61,35 @@ footer>button, footer>div>textarea {
     margin-top: 13px;
 }
 
-footer>div>span {
+footer>textarea {
+    border: none;
+    background-color: transparent;
+    resize: none;
+    width: 88%;
+    height: 23px;
+    align-self: center;
+}
+
+footer>span {
+    position: absolute;
+    bottom: 8px;
     font-size: 14px;
     font-weight: 300;
     color: #505050;
+    background-color: transparent;
 }
 
-footer>div>textarea {
-    width: 100%;
-    height: 25px;
-    align-self: flex-end;
-}
-
-footer>div>textarea::placeholder {
+footer>textarea::placeholder {
     font-style: italic;
     font-size: 16px;
     color: #000;
 }
 
-footer>div>textarea:focus {
+footer>textarea:focus {
     outline: 3px solid transparent;
 }
+
+/* ------ MAIN ------ */
 
 main {
     margin-top: calc(80px + 22px);
@@ -91,22 +103,24 @@ main>div {
     border-radius: 2px;
 }
 
-.in-out {background-color: #DCDCDC;}
-.message {background-color: #FFF;}
-.private {background-color: #FFDEDE;}
+main .in-out {background-color: #DCDCDC;}
+main .message {background-color: #FFF;}
+main .private {background-color: #FFDEDE;}
 
-.time {
+main .time {
     margin-right: 3px;
     color: #AAAAAA;
 }
 
-.username {
+main .username {
     font-weight: 700;
 }
 
-.from-to {
+main .from-to {
     margin-right: 3px;
 }
+
+/* ------ ASIDE ------ */
 
 aside {
     background: rgba(0, 0, 0, 0.6);
@@ -128,7 +142,7 @@ aside>section {
     flex-direction: column;
 }
 
-.instructions {
+aside .instructions {
     font-weight: 700;
     align-self: center;
     line-height: 19px;
@@ -164,6 +178,12 @@ aside .checked-style {
     justify-content: space-between;
     padding-right: 30px;
 }
+
+aside .visibility .private {
+    background-color: transparent;
+}
+
+/* ------ LOGIN ------ */
 
 .login {
     background: #FFFFFF;
