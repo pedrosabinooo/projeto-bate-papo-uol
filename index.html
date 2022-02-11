@@ -22,47 +22,19 @@
             <button onclick="openSidebar()"><img src="media/people.svg" alt="Participantes"></button>
         </header>
         
-        <main>
-            <div class="in-out">
-                <span class="time">(horario)</span>
-                <span class="from-to"><span class="username">Pedro</span></span>
-                <span class="text" data-identifier="message">tá cansado!</span>
-            </div>
-        </main>
+        <main></main>
         
         <aside class="">
             <button onclick="closeSidebar(this)"></button>
             <section>
                 <span class="instructions">Escolha um contato<br>para enviar mensagem:</span>
-                <div class="contacts">
-                    <div class="contact all">
-                        <figure><img src="media/people.svg" alt="Todos"></figure>
-                        <div class="checked-style">
-                            <span>Todos</span>
-                            <img class="hidden" src="media/check.svg" alt="Selected">
-                        </div>
-                    </div>
-                    <div class="contact person" data-identifier="participant">
-                        <figure><img src="media/person.svg" alt="João"></figure>
-                        <div class="checked-style">
-                            <span>João</span>
-                            <img class="hidden" src="media/check.svg" alt="Selected">
-                        </div>
-                    </div>
-                    <div class="contact person" data-identifier="participant">
-                        <figure><img src="media/person.svg" alt="Maria"></figure>
-                        <div class="checked-style">
-                            <span>Maria</span>
-                            <img src="media/check.svg" alt="Selected">
-                        </div>
-                    </div>
-                </div>
+                <div class="contacts"></div>
                 <span class="instructions">Escolha a visibilidade:</span>
                 <div class="visibility">
                     <div>
                         <figure><img src="media/lock-opened.svg" alt="Public"></figure>
                         <div class="checked-style public" data-identifier="visibility">
-                            <span>Público</span>
+                            <span class="selected">Público</span>
                             <img class="hidden" src="media/check.svg" alt="Selected">
                         </div>
                     </div>
@@ -84,9 +56,9 @@
         </div>
         
         <footer>
-            <textarea type="text" placeholder="Escreva aqui..."></textarea>
+            <input type="text" placeholder="Escreva aqui..."></input>
             <span class="private hidden">Enviando para Maria (reservadamente)</span>
-            <button data-identifier="send-message"><img src="media/send-button.svg" alt="Send button"></button>
+            <button onclick="sendMessage()" data-identifier="send-message"><img src="media/send-button.svg" alt="Send button"></button>
         </footer>
     </div>
 
