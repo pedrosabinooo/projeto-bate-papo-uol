@@ -6,6 +6,7 @@ sidebar.classList.add("hidden");
 
 // Variáveis Globais ---------------------------------------------
 let userName;
+let activeDestination;
 let mainChat;
 
 // Chamando as funções para enviar texto com Enter ---------------
@@ -38,11 +39,14 @@ function login() {
     );
     promise.then(successfulLogin);
     promise.catch(failedLogin);
-    // Colocar aqui uma função que coloca o LOADING
+    
+    document.querySelector(".login>input").classList.add("hidden");
+    document.querySelector(".login>button").classList.add("hidden");
+    document.querySelector(".login div img").classList.remove("hidden");
+    document.querySelector(".login div span").classList.remove("hidden");
 }
 
 function successfulLogin() {
-    // console.log("Login com sucesso!");
     const divLogin = document.querySelector(".login");
     divLogin.classList.add("hidden");
     setInterval(checkUserStatus, 5000);
@@ -64,18 +68,8 @@ function checkUserStatus() {
         "https://mock-api.driven.com.br/api/v4/uol/status",
         { name: userName }
     );
-    promise.then(stillInTheRoom);
-    promise.catch(outTheRoom);
-}
-
-function stillInTheRoom() {
-    // console.log("Ainda na sala!");
-}
-
-function outTheRoom(error) {
-    // console.log("Saiu da sala!");
-    alert("Você saiu. Entre novamente com o seu nome.");
-    window.location.reload();
+    promise.then(() => { /*console.log("Ainda na sala!")*/ });
+    promise.catch(() => { window.location.reload() });
 }
 
 // Função para recarregar as mensagens
@@ -83,38 +77,25 @@ function loadMessages() {
     let promise = axios.get(
         "https://mock-api.driven.com.br/api/v4/uol/messages"
     );
-    promise.then(loadingMessages);
-    promise.catch(errorLoadingMessages);
-}
-
-function loadingMessages(response) {
-    // console.log("Mensagens carregadas :)");
-    // console.log(response.data);
-    displayMessages(response.data);
-}
-
-function errorLoadingMessages(error) {
-    console.log("Não carregou as mensagens. Erro: " + error.response.status);
+    promise.then((response) => { displayMessages(response.data) });
+    promise.catch((error) => {/*console.log("Não carregou as mensagens. Erro: " + error.response.status)*/});
 }
 
 // Função para carregar as mensagens no chat
 function displayMessages(messages) {
+    document.querySelector("main").innerHTML = '';
     mainChat = document.querySelector("main");
-    // console.log(messages)
-    for (let i=0; i < messages.length; i++) {
-        // console.log(messages[i]);
-        // if (i==0 || messages[i].time > mainChat.querySelector(".message:last-child").value){
-            if (messages[i].type == 'status') {
-                statusMessage(messages[i], mainChat);
-            } else if (messages[i].type === 'message') {
-                textMessage(messages[i], mainChat);
-            } else if (messages[i].type === 'private_message' && (messages[i].from === userName || messages[i].to === userName)) {
-                privateMessage(messages[i], mainChat);
-            }
-            let message = document.querySelector("main .message:last-child");
-            message.scrollIntoView();
-        // }
-    } // LEMBRAR DE TIRAR ESSES COMENTÁRIOS -------------------------------------------------------------------
+    for (let i = 0; i < messages.length; i++) {
+        if (messages[i].type == 'status') {
+            statusMessage(messages[i], mainChat);
+        } else if (messages[i].type === 'message') {
+            textMessage(messages[i], mainChat);
+        } else if (messages[i].type === 'private_message' && (messages[i].from === userName || messages[i].to === userName)) {
+            privateMessage(messages[i], mainChat);
+        }
+        let message = document.querySelector("main .message:last-child");
+        message.scrollIntoView();
+    }
 }
 
 function statusMessage(message) {
@@ -149,14 +130,14 @@ function privateMessage(message) {
 
 // Funções para enviar as mensagens
 function sendMessage() {
-    const toUser = document.querySelector("aside .contacts .selected").innerHTML;
+    const toUser = document.querySelector("aside .contacts .selected span").innerHTML;
     const message = document.querySelector("footer input").value;
-    const visibility = document.querySelector("aside .visibility .selected").innerHTML;
-    
-    if (visibility==='Público') {
-        var type = "message"
-    } else {
+    const visibility = document.querySelector("aside .visibility .selected span").innerHTML;
+
+    if (visibility === 'Reservadamente') {
         var type = "private_message"
+    } else {
+        var type = "message"
     }
 
     let promise = axios.post(
@@ -168,18 +149,9 @@ function sendMessage() {
             type: type
         }
     );
-    promise.then(messageSent);
-    promise.catch(messageNotSent);
+    promise.then(() => { /*console.log("Enviou a mensagem!")*/ });
+    promise.catch((error) => { /*console.log("Erro no envio! Erro: " + error.response.status)*/ });
     document.querySelector("footer input").value = "";
-}
-
-function messageSent(response) {
-    // console.log("Enviou a mensagem!");
-    // console.log(response);
-}
-
-function messageNotSent(error) {
-    console.log("Erro no envio! Erro: " + error.response.status);
 }
 
 // Função para carregar os participantes online
@@ -187,41 +159,79 @@ function loadOnlineContacts() {
     let promise = axios.get(
         "https://mock-api.driven.com.br/api/v4/uol/participants"
     );
-    promise.then(loadingContacts);
-    promise.catch(errorLoadingContacts);
+    promise.then((response) => { displayContacts(response.data) });
+    promise.catch((error) => { /*console.log("Não carregou os contatos. Erro: " + error.response.status)*/ });
 }
 
-function loadingContacts(response) {
-    // console.log("Contatos carregados :)");
-    console.log(response.data);
-    displayContacts(response.data);
-}
-
-function errorLoadingContacts(error) {
-    console.log("Não carregou os contatos. Erro: " + error.response.status);
-}
-
-function displayContacts(contacts) {
+function displayContacts(dataContacts) {
     let divContacts = document.querySelector("aside .contacts");
-    divContacts.innerHTML += `
-        <div class="contact all">
-            <figure><img src="media/people.svg" alt="Todos"></figure>
+    let contacts = document.querySelectorAll("aside .contact");
+    let itWasInTheNewList = false;
+    
+    activeDestination = checkWhoIsSelected(contacts)
+    
+    divContacts.innerHTML = `
+    <div class="contact all" onclick="selectContact(this)">
+        <figure><img src="media/people.svg" alt="Todos"></figure>
             <div class="checked-style">
-                <span class="selected">Todos</span>
-                <img src="media/check.svg" alt="Selected">
+                <span>Todos</span>
+                <img class="hidden" src="media/check.svg" alt="Selected">
+        </div>
+    </div>
+    `
+    for (let i = 0; i < dataContacts.length; i++) {
+        divContacts.innerHTML += `
+        <div class="contact person" onclick="selectContact(this)" data-identifier="participant">
+            <figure><img src="media/person.svg" alt="${dataContacts[i].name}"></figure>
+                <div class="checked-style">
+                    <span>${dataContacts[i].name}</span>
+                    <img class="hidden" src="media/check.svg" alt="Selected">
             </div>
         </div>
-    `
-    for (let i=0;i<contacts.length;i++) {
-        divContacts.innerHTML += `
-            <div class="contact person" data-identifier="participant">
-                <figure><img src="media/person.svg" alt="${contacts[i].name}"></figure>
-                <div class="checked-style">
-                    <span>${contacts[i].name}</span>
-                    <img class="hidden" src="media/check.svg" alt="Selected">
-                </div>
-            </div>
         `
+        if (activeDestination === dataContacts[i].name) {
+            divContacts.querySelector(".contact:last-child").classList.add("selected");
+            divContacts.querySelector(".contact:last-child .checked-style img").classList.remove("hidden");
+            itWasInTheNewList = true;
+        }
+    }
+    if (typeof activeDestination === "undefined" || activeDestination === "Todos") {
+        document.querySelector("aside .all").classList.add("selected");
+        document.querySelector("aside .all .checked-style img").classList.remove("hidden");
+    }
+}
+
+function checkWhoIsSelected(contacts) {
+    let selectedUser;
+    contacts.forEach((contact) => {
+        if (contact.classList.contains("selected")) {
+            selectedUser = contact.querySelector("span").innerHTML;
+        }
+    })
+    return selectedUser;
+}
+
+function selectContact(nowSelected) {
+    const previouslySelected = nowSelected.parentNode.querySelector(".selected");
+    previouslySelected.querySelector(".checked-style img").classList.add("hidden");
+    previouslySelected.classList.remove("selected");
+    nowSelected.classList.add("selected");
+    nowSelected.querySelector(".checked-style img").classList.remove("hidden");
+    const toUser = nowSelected.querySelector("span").innerHTML;
+    document.querySelector("footer .private").innerHTML = `Enviando para ${toUser} (reservadamente)`;
+}
+
+function selectVisibility(nowSelected) {
+    const previouslySelected = nowSelected.parentNode.querySelector(".selected");
+    previouslySelected.querySelector(".checked-style img").classList.add("hidden");
+    previouslySelected.classList.remove("selected");
+    nowSelected.classList.add("selected");
+    nowSelected.querySelector(".checked-style img").classList.remove("hidden");
+
+    if (nowSelected.querySelector("span").innerHTML === 'Reservadamente') {
+        document.querySelector("footer .private").classList.remove("hidden")
+    } else {
+        document.querySelector("footer .private").classList.add("hidden")
     }
 }
 

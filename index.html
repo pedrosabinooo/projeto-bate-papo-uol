@@ -9,7 +9,9 @@
     
     <link rel="shortcut icon" href="media/favicon-uol.ico" type="image/x-icon">
     <link rel="stylesheet" href="style/reset.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/sidebar.css">
+    <link rel="stylesheet" href="style/login.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,18 +33,18 @@
                 <div class="contacts"></div>
                 <span class="instructions">Escolha a visibilidade:</span>
                 <div class="visibility">
-                    <div>
+                    <div class="selected" onclick="selectVisibility(this)">
                         <figure><img src="media/lock-opened.svg" alt="Public"></figure>
                         <div class="checked-style public" data-identifier="visibility">
-                            <span class="selected">Público</span>
-                            <img class="hidden" src="media/check.svg" alt="Selected">
+                            <span>Público</span>
+                            <img src="media/check.svg" alt="Selected">
                         </div>
                     </div>
-                    <div>
+                    <div onclick="selectVisibility(this)">
                         <figure><img src="media/lock-locked.svg" alt="Private"></figure>
                         <div class="checked-style private" data-identifier="visibility">
                             <span>Reservadamente</span>
-                            <img src="media/check.svg" alt="Selected">
+                            <img class="hidden" src="media/check.svg" alt="Selected">
                         </div>
                     </div>
                 </div>
@@ -53,11 +55,15 @@
             <img src="media/logo-uol.svg" alt="Logo Bate Papo UOL">
             <input type="text" placeholder="Digite seu nome" data-identifier="enter-name">
             <button onclick="login()" data-identifier="start"><p>Entrar</p></button>
+            <div>
+                <img class="hidden" src="media/spinning-loading.gif" alt="Loading">
+                <span class="hidden">Entrando...</span>
+            </div>
         </div>
         
         <footer>
             <input type="text" placeholder="Escreva aqui..."></input>
-            <span class="private hidden">Enviando para Maria (reservadamente)</span>
+            <span class="private hidden"></span>
             <button onclick="sendMessage()" data-identifier="send-message"><img src="media/send-button.svg" alt="Send button"></button>
         </footer>
     </div>
